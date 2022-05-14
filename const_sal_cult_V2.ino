@@ -1,10 +1,17 @@
+// inPin in input pin
+// outPin is output pin
+// inVal is initial value of resistance
+// thrVal is threshold value
+// avgVal is average value
+
 const int inPin = A0;
-const int outPin = 13;
+const int outPin = 13;  
 float inVal = 0;
 float thrVal;
 float avgVal;
 int i;
 
+// This function calculates the avg with 1000 iter
 float avg (){
   for (i = 0; i < 1000; i++) {
   inVal += analogRead(inPin);
@@ -13,19 +20,18 @@ float avg (){
 }
 
 void setup() {
-  // put your setup code here, to run once:
   Serial.begin(9600);
   pinMode(outPin, OUTPUT);
   thrVal = avg();
 }
 
+// This function is a scaling function (standardizer)
 float flt_map (float val, float in_min, float in_max, float out_min, float out_max) {
   return (val - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
 
 void loop() {
-  // put your main code here, to run repeatedly:
   inVal = 0;
   inVal = analogRead(inPin);
 
